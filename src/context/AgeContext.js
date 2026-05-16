@@ -1,21 +1,12 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useReducer } from "react";
+import { ageReducer } from "../reducers/AgeReducer/AgeReducer";
 export const AgeContext = createContext();
 
 function AgeContextProvider(props) {
-  const [age, setAge] = useState(20);
-  const addOneToAge = () => {
-    setAge((prevAge) => prevAge + 1);
-  };
-  const addFiveToAge = () => {
-    setAge((prevAge) => prevAge + 5);
-  };
-  const addNumToAge = (num) => {
-    setAge((prevAge) => prevAge + num);
-  };
+  const [age, dispatch] = useReducer(ageReducer, 0);
+
   return (
-    <AgeContext.Provider
-      value={{ age, addOneToAge, addFiveToAge, addNumToAge }}
-    >
+    <AgeContext.Provider value={{ age, dispatch }}>
       {props.children}
     </AgeContext.Provider>
   );
